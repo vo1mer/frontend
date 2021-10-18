@@ -10,7 +10,7 @@ const Home: NextPage = (props) => {
         <Header />
 
         <main>
-            / page
+            / page.
         </main>
     </div>
   )
