@@ -23,6 +23,8 @@ const RepositoriesPage: NextPage = () => {
       enabled: !!pageId
   })
 
+  console.log(readmeData)
+
   // @ts-ignore
   const langObj = data && Object.entries(data?.languages.edges).reduce((acc, [key, value]) => {
     // @ts-ignore
