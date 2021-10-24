@@ -1,0 +1,18 @@
+query getRepos($login: String!, $after: String, $before: String){
+    user(login: $login) {
+        repositories(first: 3, after: $after, before: $before, orderBy: {field: CREATED_AT, direction: DESC}) {
+            edges {
+                node {
+                    id
+                    name
+                }
+            }
+            pageInfo {
+                endCursor
+                startCursor
+                hasNextPage
+                hasPreviousPage
+            }
+        }
+    }
+}
