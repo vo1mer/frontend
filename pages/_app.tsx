@@ -1,27 +1,20 @@
-import '../styles/globals.css';
 import 'tailwindcss/tailwind.css';
-import type { AppProps } from 'next/app';
-import Head from "next/head";
+import '../styles/globals.css';
+
+import { useState } from 'react';
 import { QueryClientProvider, QueryClient, Hydrate } from 'react-query';
-import { useState } from "react";
-
-// const queryClient = new QueryClient({
-// 	defaultOptions: {
-// 		queries: {
-// 			staleTime: 20 * 1000
-// 		}
-// 	}
-// });
-
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient({
-	  defaultOptions: {
-		  queries: {
-			  staleTime: 20 * 1000
-		  }
-	  }
-  }))
+	// create one instance for each page
+	const [queryClient] = useState(() => new QueryClient({
+		defaultOptions: {
+			queries: {
+				staleTime: 20 * 1000,
+			},
+		},
+	}));
 
 	return (
 		<>
@@ -37,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				</Hydrate>
 			</QueryClientProvider>
 		</>
-	)
+	);
 }
 
-export default MyApp
+export default MyApp;

@@ -1,40 +1,37 @@
 import React, { useState } from 'react';
 import {
 	GetReposQuery, GetSearchQuery,
-	useGetReposQuery, useGetSearchQuery
-} from "../../lib/generated/graphql";
-import RepoItem from "@/components/RepoItem";
+	useGetReposQuery, useGetSearchQuery,
+} from '../../lib/generated/graphql';
+import RepoItem from '@/components/RepoItem';
 
-import graphQlClient from "../../lib/graph-client";
+import graphQlClient from '../../lib/graph-client';
 
 const ReposList = () => {
-
-	const [enableReposFetch, setEnableReposFetch] = useState(true);
 	const [endCursor, setEndCursor] = useState<string | null | undefined>(null);
 	const [searchStr, setSearchStr] = useState<string>('');
 
-	const searchQueryConst = 'user:'
+	const searchQueryConst = 'user:';
 
-	const {data: repos, isLoading: reposIsLoading} = useGetReposQuery<GetReposQuery, Error>(graphQlClient, {
-		login: "Vo1mer", before: null, after: endCursor || null
+	const { data: repos, isLoading: reposIsLoading } = useGetReposQuery<GetReposQuery, Error>(graphQlClient, {
+		login: process.env.NEXT_PUBLIC_DEFAULT_USER_NAME as string, before: null, after: endCursor || null,
 	}, {
 		keepPreviousData: true,
-		enabled: enableReposFetch
-	})
+	});
 
-	const {data: searchRepos, isLoading: searchIsLoading} = useGetSearchQuery<GetSearchQuery, Error>(graphQlClient, {
-		query: `${searchQueryConst}Vo1mer ${searchStr}`
+	const { data: searchRepos, isLoading: searchIsLoading } = useGetSearchQuery<GetSearchQuery, Error>(graphQlClient, {
+		query: `${searchQueryConst}${process.env.NEXT_PUBLIC_DEFAULT_USER_NAME as string} ${searchStr}`,
 	}, {
 		keepPreviousData: false,
-		enabled: !!searchStr
-	})
+		enabled: !!searchStr,
+	});
 
 	const prevPage = () => {
-		setEndCursor(null)
-	}
+		setEndCursor(null);
+	};
 	const nextPage = () => {
-		setEndCursor(repos?.user.repositories.pageInfo.endCursor)
-	}
+		setEndCursor(repos?.user.repositories.pageInfo.endCursor);
+	};
 
 	return (
 		<div className="mx-auto flex flex-col px-4 md:px-0">
@@ -46,6 +43,11 @@ const ReposList = () => {
 					onChange={(e) => setSearchStr(e.target.value)} value={searchStr}
 				/>
 			</div>
+
+			{reposIsLoading && <h1 className="mx-auto">LOADING ...</h1>}
+			{searchIsLoading && <h1 className="mx-auto">SEARCHING ...</h1>}
+			{!searchIsLoading && !searchRepos?.search.repositoryCount && searchStr &&
+			<h1 className="mx-auto">Sorry, have no result :_(</h1>}
 
 			{!!searchRepos?.search.repositoryCount && (
 				<div className="pb-5">
@@ -59,10 +61,6 @@ const ReposList = () => {
 					))}
 				</div>
 			)}
-
-			{reposIsLoading && <h1 className="mx-auto">LOADING ...</h1>}
-			{searchIsLoading && <h1 className="mx-auto">SEARCHING ...</h1>}
-			{!searchIsLoading && !searchRepos?.search.repositoryCount && searchStr && <h1 className="mx-auto">Sorry, have no result :_(</h1>}
 
 			{repos?.user?.repositories.edges && !searchStr && (
 				<>
@@ -82,20 +80,20 @@ const ReposList = () => {
 							className="shadow-md p-4 bg-gray-100 rounded hover:shadow-lg transition duration-200 ease-in-out mr-5"
 							onClick={prevPage}
 						>
-							prev
+							{`< `}
+							Prev
 						</button>
 
 						<button
 							className="shadow-md p-4 bg-gray-100 rounded hover:shadow-lg transition duration-500 ease-in-out ml-5"
 							onClick={nextPage}
 						>
-							next
+							Next
+							{` >`}
 						</button>
 					</div>
 				</>
-
 			)}
-
 		</div>
 	);
 };

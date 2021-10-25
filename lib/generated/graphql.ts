@@ -20,12 +20,12 @@ export type Scalars = {
 
 export type Blob = {
   __typename?: 'Blob';
-  text: Scalars['String'];
+  text?: Maybe<Scalars['String']>;
 };
 
 export type Commit = {
   __typename?: 'Commit';
-  history?: Maybe<TotalCommits>;
+  history: TotalCommits;
 };
 
 export type ContribCollection = {
@@ -56,7 +56,7 @@ export type LangEdge = {
 
 export type LangEdges = {
   __typename?: 'LangEdges';
-  edges: LangEdge;
+  edges: Array<LangEdge>;
 };
 
 export type LangNode = {
@@ -216,7 +216,7 @@ export type GetRepoQueryVariables = Exact<{
 }>;
 
 
-export type GetRepoQuery = { __typename?: 'Query', repository: { __typename?: 'Repo', id: string, name: string, stargazerCount: number, languages: { __typename?: 'LangEdges', edges: { __typename?: 'LangEdge', size: number, node: { __typename?: 'LangNode', color: string, name: string } } }, object: { __typename?: 'Blob', text: string } | { __typename?: 'Commit', history?: { __typename?: 'TotalCommits', totalCount: number } | null | undefined } } };
+export type GetRepoQuery = { __typename?: 'Query', repository: { __typename?: 'Repo', id: string, name: string, stargazerCount: number, languages: { __typename?: 'LangEdges', edges: Array<{ __typename?: 'LangEdge', size: number, node: { __typename?: 'LangNode', color: string, name: string } }> }, object: { __typename?: 'Blob', text?: string | null | undefined } | { __typename?: 'Commit', history: { __typename?: 'TotalCommits', totalCount: number } } } };
 
 export type GetReposQueryVariables = Exact<{
   login: Scalars['String'];
@@ -322,7 +322,7 @@ export const GetReposDocument = `
     query getRepos($login: String!, $after: String, $before: String) {
   user(login: $login) {
     repositories(
-      first: 3
+      first: 5
       after: $after
       before: $before
       orderBy: {field: CREATED_AT, direction: DESC}

@@ -1,13 +1,13 @@
 query getSearch($query: String!){
-    search(query: $query, type: REPOSITORY, first: 10) {
-        repositoryCount
-        edges {
-            node {
-                ... on Repository {
-                    name
-                    updatedAt
-                }
-            }
-        }
-    }
+	search(query: $query, type: REPOSITORY, first: 10) {
+		repositoryCount
+		edges {
+			node {
+				... on Repository {
+					name
+					updatedAt
+				}
+			}
+		}
+	}
 }

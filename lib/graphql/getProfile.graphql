@@ -1,25 +1,25 @@
 query getProfile($login: String!){
-    user(login: $login) {
-        id
-        name
-        avatarUrl
-        bio
-        contributionsCollection {
-            contributionCalendar {
-                totalContributions
-            }
-        }
-        repositories(first: 100) {
-            edges {
-                node {
-                    languages(first: 10) {
-                        nodes {
-                            name
-                            color
-                        }
-                    }
-                }
-            }
-        }
-    }
+	user(login: $login) {
+		id
+		name
+		avatarUrl
+		bio
+		contributionsCollection {
+			contributionCalendar {
+				totalContributions
+			}
+		}
+		repositories(first: 100) {
+			edges {
+				node {
+					languages(first: 10) {
+						nodes {
+							name
+							color
+						}
+					}
+				}
+			}
+		}
+	}
 }

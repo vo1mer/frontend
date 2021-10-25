@@ -1,69 +1,77 @@
 import React from 'react';
-import { useGetProfileQuery, } from "../../lib/generated/graphql";
-import graphQlClient from "../../lib/graph-client";
 
+import { LangNode, useGetProfileQuery } from '../../lib/generated/graphql';
+import graphQlClient from '../../lib/graph-client';
+
+interface LangsCount {
+	total: number;
+	items: {
+		[key: string]: {
+			count: number;
+			color: string;
+		}
+	};
+}
+
+interface LangPercentage {
+	[key: string]: {
+		percent: number;
+		color: string;
+	};
+}
 
 const ProfileCard = () => {
-
 	const { data, isLoading } = useGetProfileQuery(graphQlClient, {
-		login: "Vo1mer"
+		login: process.env.NEXT_PUBLIC_DEFAULT_USER_NAME as string,
 	}, {
 		keepPreviousData: true,
-		select: resp => resp.user
-		// enabled: enableReposFetch
-	})
+		select: resp => resp.user,
+	});
 
-
-
-	const langList = data?.repositories?.edges?.reduce((acc, item) => {
+	const langList = data?.repositories?.edges?.reduce((acc: LangNode[], item) => {
 		item?.node?.languages?.nodes?.map((i) => {
-			// @ts-ignore
-			acc.push(i)
-		})
+			acc.push(i);
+		});
 
-		return acc
+		return acc;
 	}, []);
 
-	const langsCounts = langList?.reduce((acc: any, item: any) => {
-		if (!acc[item.name]) {
-			acc[item.name] = {
+	const langsCounts = langList?.reduce((acc, item: LangNode) => {
+		if (!acc.items[item.name]) {
+			acc.items[item.name] = {
 				count: 1,
-				color: item?.color
+				color: item?.color,
 			};
 		} else {
-			acc[item.name].count += 1;
+			acc.items[item.name].count += 1;
 		}
 
-		acc['total'] += 1
+		acc['total'] += 1;
 
-		return acc
-	}, {'total': 0});
+		return acc;
+	}, { 'total': 0, items: {} } as LangsCount);
 
-	const langPercentage = langsCounts && Object.entries(langsCounts)?.reduce((acc: any, [key, value]: any) => {
-		if (key !== 'total'){
+	const langPercentage = langsCounts && Object.entries(langsCounts.items)?.reduce((acc: LangPercentage, [key, value]) => {
+		if (key !== 'total') {
 			acc[key] = {
-				percent: (value.count * 100 / langsCounts.total).toFixed(1),
-				color: value.color
-		};
+				percent: +(value.count * 100 / langsCounts.total).toFixed(1),
+				color: value.color,
+			};
 		}
 
-		return acc
+		return acc;
 	}, {});
 
-
-	// @ts-ignore
-	// @ts-ignore
 	return (
 		<>
 			{isLoading && <h1 className="flex justify-center text-lg py-6">Loading ...</h1>}
 
 			{data && (
-				<div className='flex rounded-md shadow-lg p-6 flex-col md:flex-row'>
-
+				<div className="flex rounded-md shadow-lg p-6 flex-col md:flex-row">
 					<div className="flex flex-1 flex-col align-top border-b-2 md:border-b-0">
 						{data.avatarUrl && (
 							<img
-								src={data?.avatarUrl}
+								src={data.avatarUrl}
 								alt="profile_img"
 								width={150}
 								height={150}
@@ -71,7 +79,7 @@ const ProfileCard = () => {
 						)}
 
 						{data.name && (
-							<span className="text-lg py-3">{data?.name}</span>
+							<span className="text-lg py-3">{data.name}</span>
 						)}
 						{data.bio && (
 							<span className="text-lg py-3">{data.bio}</span>
@@ -82,7 +90,7 @@ const ProfileCard = () => {
 						<span
 							className="my-4 md:mb-4 md:mt-0"
 						>
-							{`${data?.contributionsCollection?.contributionCalendar?.totalContributions} contributions for last year`}
+							{`${data.contributionsCollection.contributionCalendar.totalContributions} contributions for last year`}
 						</span>
 
 						{langPercentage && (
@@ -91,10 +99,8 @@ const ProfileCard = () => {
 									<li
 										key={`lang-${key}`}
 										className="w-2/4 py-2"
-										// @ts-ignore
-										style={{color: value?.color as string}}
+										style={{ color: value?.color as string }}
 									>
-										{/* @ts-ignore */}
 										{`${key}: ${value.percent}%`}
 									</li>
 								))}

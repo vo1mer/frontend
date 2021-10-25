@@ -1,26 +1,26 @@
-query getRepo($name: String!, $owner: String!){
-    repository(name: $name, owner: $owner) {
-        id
-        name
-        stargazerCount
-        languages(first: 10) {
-            edges {
-                size
-                node {
-                    color
-                    name
-                }
-            }
-        }
-        object(expression: "master") {
-            ... on Blob {
-                text
-            }
-            ... on Commit {
-                history {
-                    totalCount
-                }
-            }
-        }
-    }
+query getRepo($name: String!, $owner: String!, $expression: String!){
+	repository(name: $name, owner: $owner) {
+		id
+		name
+		stargazerCount
+		languages(first: 10) {
+			edges {
+				size
+				node {
+					color
+					name
+				}
+			}
+		}
+		object(expression: $expression) {
+			... on Blob {
+				text
+			}
+			... on Commit {
+				history {
+					totalCount
+				}
+			}
+		}
+	}
 }
