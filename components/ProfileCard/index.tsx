@@ -68,7 +68,7 @@ const ProfileCard = () => {
 
 			{data && (
 				<div className="flex rounded-md shadow-lg p-6 flex-col md:flex-row">
-					<div className="flex flex-1 flex-col align-top border-b-2 md:border-b-0">
+					<div className="flex flex-1 flex-col align-top border-b-2 md:border-b-0 items-center md:items-start">
 						{data.avatarUrl && (
 							<img
 								src={data.avatarUrl}

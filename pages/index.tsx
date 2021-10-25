@@ -10,7 +10,7 @@ const Home = () => {
 		<div>
 			<Header/>
 
-			<main className="container mx-auto">
+			<main className="container mx-auto custom-container">
 				<ReposList/>
 			</main>
 		</div>

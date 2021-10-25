@@ -3,3 +3,23 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.custom-container {
+  max-width: 1024px;
+}
+
+@media screen and (max-width: 1200px){
+  .custom-container {
+    max-width: 991px;
+  }
+}
+@media screen and (max-width: 991px){
+  .custom-container {
+    max-width: 768px;
+  }
+}
+@media screen and (max-width: 768px){
+  .custom-container {
+    max-width: 550px;
+  }
+}

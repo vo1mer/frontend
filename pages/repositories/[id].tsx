@@ -57,28 +57,24 @@ const RepositoriesPage: NextPage = () => {
 		<div>
 			<Header />
 
-			<main className="container mx-auto px-4 md:px-0">
+			<main className="container mx-auto px-4 md:px-0 custom-container">
 				{data && (
-					<div className="container mx-auto flex rounded-md shadow-lg p-6 flex-col md:flex-row flex-wrap">
+					<div className="mx-auto flex rounded-md shadow-lg p-6 flex-col md:flex-row flex-wrap">
 						<div className="flex flex-1 flex-col align-top border-b-2 md:border-b-0 mb-5 pb-4 md:mb-0">
-
 							{data.name && (
 								<span className="text-3xl pb-4">{data?.name}</span>
 							)}
 
 							<span className="text-lg block mb-4">{`${data.stargazerCount || 0} star/s`}</span>
 
-							{/*<span className="text-lg">{`${data.object?.history?.totalCount || 0} commit/s`}</span>*/}
-
 							{hasProperty(data?.object, 'history') ? (
 								<span className="text-lg">{`${data.object.history.totalCount} commit/s`}</span>
 							) : (
 								<span className="text-lg">0 commit/s</span>
 							)}
-
 						</div>
 
-						<div className="flex flex-1 flex-col border-b-2 md:border-b-0">
+						<div className="flex flex-1 flex-col border-b-2 md:border-b-0 border-b-2 md:border-b-0">
 							<div className="pb-4" style={{ width: '100%', maxWidth: '500px' }}>
 								<h3 className="text-lg">Languages</h3>
 
@@ -118,7 +114,7 @@ const RepositoriesPage: NextPage = () => {
 							</div>
 						</div>
 
-						<div className="w-full mt-10 flex flex-col">
+						<div className="w-full mt-10 flex flex-col border-t-0 md:border-t-2">
 							<h2 className="text-5xl self-center py-4">README:</h2>
 
 							{hasProperty(readmeData?.object, 'text') ? (
