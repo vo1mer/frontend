@@ -13,7 +13,7 @@ const ReposList = () => {
 
 	const searchQueryConst = 'user:';
 
-	const { data: repos, isLoading: reposIsLoading } = useGetReposQuery<GetReposQuery, Error>(graphQlClient, {
+	const { data: repos, isLoading: reposIsLoading, isSuccess } = useGetReposQuery<GetReposQuery, Error>(graphQlClient, {
 		login: process.env.NEXT_PUBLIC_DEFAULT_USER_NAME as string, before: null, after: endCursor || null,
 	}, {
 		keepPreviousData: true,
@@ -45,9 +45,12 @@ const ReposList = () => {
 			</div>
 
 			{reposIsLoading && <h1 className="mx-auto">LOADING ...</h1>}
+
 			{searchIsLoading && <h1 className="mx-auto">SEARCHING ...</h1>}
-			{!searchIsLoading && !searchRepos?.search.repositoryCount && searchStr &&
-			<h1 className="mx-auto">Sorry, have no result :_(</h1>}
+
+			{!searchIsLoading && !searchRepos?.search.repositoryCount && searchStr && (
+				<h1 className="mx-auto">Sorry, have no result :_(</h1>
+			)}
 
 			{!!searchRepos?.search.repositoryCount && (
 				<div className="pb-5">
@@ -62,7 +65,11 @@ const ReposList = () => {
 				</div>
 			)}
 
-			{repos?.user?.repositories.edges && !searchStr && (
+			{!repos?.user?.repositories.edges.length && !searchStr && isSuccess && (
+				<h1 className="mx-auto">Have no repositories :_(</h1>
+			)}
+
+			{!!repos?.user?.repositories.edges.length && !searchStr && (
 				<>
 					<div className="flex flex-col">
 						{repos?.user?.repositories.edges?.map((repo) => (
