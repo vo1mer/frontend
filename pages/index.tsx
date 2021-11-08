@@ -2,18 +2,13 @@ import React from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 
 import getRepos from 'lib/get-repos';
-import Header from 'components/Header';
 import ReposList from 'components/ReposList';
 
 const Home = () => {
 	return (
-		<div>
-			<Header/>
-
-			<main className="container mx-auto custom-container">
-				<ReposList/>
-			</main>
-		</div>
+		<main className="container mx-auto custom-container">
+			<ReposList />
+		</main>
 	);
 };
 

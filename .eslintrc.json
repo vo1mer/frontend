@@ -1,3 +1,28 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prefer-const": "warn",
+    "no-unused-vars": "warn",
+    "no-trailing-spaces": "warn",
+    "no-empty-function": "off"
+  },
+  "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["**/generated/graphql.ts"]
 }

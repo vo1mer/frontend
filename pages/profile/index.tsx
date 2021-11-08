@@ -1,19 +1,14 @@
 import React from 'react';
 import { dehydrate, QueryClient } from 'react-query';
 
-import Header from 'components/Header';
-import ProfileCard from '@/components/ProfileCard';
+import ProfileCard from 'components/ProfileCard';
 import getProfile from '../../lib/get-profile';
 
 const Profile = () => {
 	return (
-		<div>
-			<Header />
-
-			<main className="container mx-auto px-4 md:px-0 custom-container">
-				<ProfileCard />
-			</main>
-		</div>
+		<main className="container mx-auto px-4 md:px-0 custom-container">
+			<ProfileCard />
+		</main>
 	);
 };
 

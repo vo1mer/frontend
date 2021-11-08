@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+/* eslint-disable */
 const path = require("path");
 
 module.exports = {
@@ -20,15 +21,15 @@ module.exports = {
       analyzerHost: '0.0.0.0',
     },
   },
-  cssLoaderOptions: {
-    localIdentName: '[local]__[hash:base64:5]',
-  },
-  sassLoaderOptions: {
-    outputStyle: 'compressed',
-  },
-  progressBar: {
-    profile: false
-  },
+  // cssLoaderOptions: {
+  //   localIdentName: '[local]__[hash:base64:5]',
+  // },
+  // sassLoaderOptions: {
+  //   outputStyle: 'compressed',
+  // },
+  // progressBar: {
+  //   profile: false
+  // },
   webpack(config, options) {
 
     // config.module.rules.push({
@@ -43,46 +44,46 @@ module.exports = {
     //   },
     // });
 
-    config.module.rules.forEach(rule => {
-      if (rule.test && (rule.test.toString().includes('.scss') || rule.test.toString().includes('.css'))) {
-        rule.rules = rule.use.map(useRule => {
-          if (typeof useRule === 'string') {
-            return {
-              loader: useRule,
-            };
-          }
-          if (useRule.loader.startsWith('css-loader')) {
-            return {
-              oneOf: [
-                {
-                  test: /\.global\.scss$/,
-                  loader: useRule.loader,
-                  options: {
-                    ...useRule.options,
-                    modules: false,
-                  },
-                },
-                {
-                  test: /\.css$/,
-                  loader: useRule.loader,
-                  options: {
-                    ...useRule.options,
-                    modules: false,
-                  },
-                },
-                {
-                  loader: useRule.loader,
-                  options: useRule.options,
-                },
-              ],
-            };
-          }
-          return useRule;
-        });
-        // eslint-disable-next-line no-param-reassign
-        delete rule.use;
-      }
-    });
+    // config.module.rules.forEach(rule => {
+    //   if (rule.test && (rule.test.toString().includes('.scss') || rule.test.toString().includes('.css'))) {
+    //     rule.rules = rule.use.map(useRule => {
+    //       if (typeof useRule === 'string') {
+    //         return {
+    //           loader: useRule,
+    //         };
+    //       }
+    //       if (useRule.loader.startsWith('css-loader')) {
+    //         return {
+    //           oneOf: [
+    //             {
+    //               test: /\.global\.scss$/,
+    //               loader: useRule.loader,
+    //               options: {
+    //                 ...useRule.options,
+    //                 modules: false,
+    //               },
+    //             },
+    //             {
+    //               test: /\.css$/,
+    //               loader: useRule.loader,
+    //               options: {
+    //                 ...useRule.options,
+    //                 modules: false,
+    //               },
+    //             },
+    //             {
+    //               loader: useRule.loader,
+    //               options: useRule.options,
+    //             },
+    //           ],
+    //         };
+    //       }
+    //       return useRule;
+    //     });
+    //     // eslint-disable-next-line no-param-reassign
+    //     delete rule.use;
+    //   }
+    // });
 
     return config;
   }

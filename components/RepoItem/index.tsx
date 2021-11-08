@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import Link from 'next/link';
 import { ReposEdgesNode } from '../../lib/generated/graphql';
 
-import styles from '@/components/ReposList/styles.module.scss';
+import styles from './styles.module.scss';
 
 const RepoItem = ({ id, name }: ReposEdgesNode) => {
 	return (

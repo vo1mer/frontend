@@ -1,5 +1,5 @@
 import React from 'react';
-import NavLink from '@/components/NavLink';
+import NavLink from 'components/NavLink';
 
 export interface INavLink {
 	url: string;

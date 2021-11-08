@@ -1,35 +1,7 @@
-import { gql } from 'graphql-request';
 import graphQLClient from './graph-client';
+import { GetRepoDocument } from './generated/graphql';
 
 const getRepo = async (name: string) => {
-	const repoQuery = gql`
-		query getRepo($name: String!, $owner: String!, $expression: String!){
-			repository(name: $name, owner: $owner) {
-				id
-				name
-				stargazerCount
-				languages(first: 10) {
-					edges {
-						size
-						node {
-							color
-							name
-						}
-					}
-				}
-				object(expression: $expression) {
-					... on Blob {
-						text
-					}
-					... on Commit {
-						history {
-							totalCount
-						}
-					}
-				}
-			}
-		}
-	`;
 
 	const variables = {
 		name: name,
@@ -37,10 +9,15 @@ const getRepo = async (name: string) => {
 		expression: 'master',
 	};
 
-	const response = await graphQLClient.request(repoQuery, variables);
-	const data = JSON.parse(JSON.stringify(response));
+	try {
+		const response = await graphQLClient.request(GetRepoDocument, variables);
+		const data = JSON.parse(JSON.stringify(response));
 
-	return data.user;
+		return data
+	} catch (error) {
+		const parsedError = JSON.parse(JSON.stringify(error));
+		throw new Error(parsedError.response.errors[0].message)
+	}
 };
 
 export default getRepo;

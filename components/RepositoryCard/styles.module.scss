@@ -1,0 +1,63 @@
+.cardWrapper {
+	@apply mx-auto rounded-md shadow-lg p-6;
+
+	min-height: 370px;
+
+	&.centerAll {
+		@apply flex justify-center items-center
+	}
+}
+
+.repoInfoSectionWrapper {
+	@apply flex flex-col md:flex-row;
+
+	.repoDetailsWrapper {
+		@apply flex flex-1 flex-col align-top border-b-2 md:border-b-0 mb-5 pb-4 md:mb-0;
+
+		.name {
+			@apply text-3xl pb-4;
+		}
+
+		.stargazerCount {
+			@apply text-lg block mb-4;
+		}
+
+		.commitCount {
+			@apply text-lg;
+		}
+	}
+
+	.languagesWrapper {
+		@apply flex flex-1 flex-col border-b-2 md:border-b-0 border-b-2 md:border-b-0 pb-4;
+		width: 100%;
+		max-width: 500px;
+
+		h3 {
+			@apply text-lg
+		}
+
+		.languagesSchema {
+			@apply flex flex-row align-middle mt-4 mb-2;
+
+			div {
+				@apply flex h-3 rounded-md;
+			}
+		}
+
+		.languageDesc {
+			@apply relative pl-3;
+
+			.langDot {
+				@apply w-2 h-2 top-2 left-0 rounded-full absolute;
+			}
+		}
+	}
+}
+
+.repoReadmeSectionWrapper {
+	@apply w-full mt-10 flex flex-col border-t-0 md:border-t-2;
+
+	h2 {
+		@apply text-5xl self-center py-4;
+	}
+}

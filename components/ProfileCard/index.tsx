@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import { LangNode, useGetProfileQuery } from '../../lib/generated/graphql';
 import graphQlClient from '../../lib/graph-client';
@@ -70,7 +71,7 @@ const ProfileCard = () => {
 				<div className="flex rounded-md shadow-lg p-6 flex-col md:flex-row">
 					<div className="flex flex-1 flex-col align-top border-b-2 md:border-b-0 items-center md:items-start">
 						{data.avatarUrl && (
-							<img
+							<Image
 								src={data.avatarUrl}
 								alt="profile_img"
 								width={150}

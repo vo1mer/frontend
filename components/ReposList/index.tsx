@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import {
 	GetReposQuery, GetSearchQuery,
 	useGetReposQuery, useGetSearchQuery,
-} from '../../lib/generated/graphql';
-import RepoItem from '@/components/RepoItem';
+} from 'lib/generated/graphql';
+import RepoItem from 'components/RepoItem';
 
 import graphQlClient from '../../lib/graph-client';
 
